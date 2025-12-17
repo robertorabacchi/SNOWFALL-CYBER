@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>⚡ CYBER SNOWFALL - 2500 Particles Bookmarklet</title>
-  <meta name="description" content="Extreme cyber snowfall bookmarklet! 2500 digital particles (✦ 0 1) on any website. GPU-accelerated performance.">
+  <title>⚡ CYBER SNOWFALL - WebGL Edition | 1000 Particles 0|1</title>
+  <meta name="description" content="WebGL cyber snowfall bookmarklet! 1000 digital particles (0 | 1) on any website. GPU-accelerated performance.">
   
   <!-- Open Graph -->
-  <meta property="og:title" content="⚡ CYBER SNOWFALL - 2500 Particles">
-  <meta property="og:description" content="Extreme cyber snowfall with 2500 digital particles! ✦ 0 1">
+  <meta property="og:title" content="⚡ CYBER SNOWFALL - WebGL 1000 Particles">
+  <meta property="og:description" content="WebGL cyber snowfall with 1000 particles! 0 | 1">
   <meta property="og:type" content="website">
   
   <!-- Favicon -->
@@ -350,17 +350,17 @@
 <body>
   
   <div class="container">
-    <div class="cyber-badge">⚡ EXTREME MODE ⚡</div>
+    <div class="cyber-badge">⚡ WEBGL EDITION ⚡</div>
     
     <h1>CYBER SNOWFALL</h1>
-    <p class="subtitle">2500 Digital Particles | GPU Accelerated | ✦ 0 1</p>
+    <p class="subtitle">1000 Digital Particles | WebGL GPU | 0 | 1</p>
     
     <div class="bookmarklet-box">
       <p class="drag-instruction">
         👇 DRAG THIS TO YOUR BOOKMARKS 👇
       </p>
       
-      <a href="javascript:(function(){const isMobile=window.innerWidth<768;const count=isMobile?500:2500;if(document.getElementById('titan-cyber-snow')){document.getElementById('titan-cyber-snow').remove();document.getElementById('titan-cyber-styles').remove();return}const s=document.createElement('style');s.id='titan-cyber-styles';s.textContent='#titan-cyber-snow{position:fixed;top:0;left:0;width:100%25;height:100%25;pointer-events:none;z-index:999999;overflow:hidden}.titan-cyber-flake{position:absolute;top:-10%25;font-size:1.5rem;color:%2300ff9f;opacity:.8;user-select:none;animation:titan-cyber-fall linear infinite;text-shadow:0 0 5px rgba(0,255,159,.8);will-change:transform,opacity;transform:translateZ(0)}@keyframes titan-cyber-fall{0%25{transform:translateY(0) translateX(0) rotate(0deg);opacity:0}10%25{opacity:.8}90%25{opacity:.8}100%25{transform:translateY(110vh) translateX(100px) rotate(360deg);opacity:0}}@media (max-width:768px){.titan-cyber-flake{font-size:1.2rem}}';document.head.appendChild(s);const c=document.createElement('div');c.id='titan-cyber-snow';const shapes=['✦','0','1'];for(let i=0;i<count;i++){const f=document.createElement('div');f.className='titan-cyber-flake';f.textContent=shapes[Math.floor(Math.random()*shapes.length)];f.style.left=Math.random()*100+'%25';f.style.animationDelay=Math.random()*10+'s';f.style.animationDuration=(6+Math.random()*6)+'s';c.appendChild(f)}document.body.appendChild(c);const n=document.createElement('div');n.textContent=`⚡ CYBER SNOW ACTIVATED! ${count} particles | Click again to stop`;n.style.cssText='position:fixed;top:20px;right:20px;background:rgba(0,0,0,.9);color:%2300ff9f;padding:15px 20px;border:2px solid %2300ff9f;font-family:monospace;font-size:14px;z-index:9999999;box-shadow:0 0 20px rgba(0,255,159,.5)';document.body.appendChild(n);setTimeout(()=>{n.style.transition='opacity 0.3s';n.style.opacity='0';setTimeout(()=>n.remove(),300)},4000)})();" 
+      <a href="javascript:void(fetch('https://snowcyber.digitalengineered.ai/snowfall-cyber-webgl.js').then(r=>r.text()).then(eval))" 
          class="bookmarklet-btn"
          onclick="return false;">
         ⚡ CYBER SNOW
@@ -370,7 +370,7 @@
     </div>
     
     <div class="warning">
-      ⚠️ <strong>EXTREME MODE:</strong> 2500 particles on desktop (500 on mobile). Requires decent GPU. May lag on older devices.
+      ⚡ <strong>WEBGL POWERED:</strong> 1000 particles using native WebGL. Optimized GPU rendering. Smooth 60 FPS on modern browsers.
     </div>
     
     <div class="instructions">
@@ -379,7 +379,7 @@
         <li><strong>DRAG</strong> the "⚡ CYBER SNOW" button to your bookmarks bar</li>
         <li><strong>NAVIGATE</strong> to any website (Facebook, LinkedIn, Twitter, etc.)</li>
         <li><strong>CLICK</strong> the bookmark</li>
-        <li><strong>BOOM!</strong> 2500 cyber particles! ✦ 0 1</li>
+        <li><strong>BOOM!</strong> 1000 cyber particles! 0 | 1</li>
         <li><strong>CLICK AGAIN</strong> to disable</li>
       </ol>
     </div>
@@ -395,18 +395,18 @@
     <div class="features">
       <div class="feature">
         <div class="feature-icon">⚡</div>
-        <strong>2500 PARTICLES</strong><br>
-        Extreme density (500 mobile)
+        <strong>1000 PARTICLES</strong><br>
+        WebGL optimized
       </div>
       <div class="feature">
-        <div class="feature-icon">✦</div>
-        <strong>CYBER SYMBOLS</strong><br>
-        ✦ 0 1 digital aesthetic
+        <div class="feature-icon">0️⃣</div>
+        <strong>BINARY SYMBOLS</strong><br>
+        0 | 1 digital aesthetic
       </div>
       <div class="feature">
         <div class="feature-icon">🚀</div>
-        <strong>GPU ACCELERATED</strong><br>
-        Optimized performance
+        <strong>NATIVE WEBGL</strong><br>
+        GPU rendering
       </div>
       <div class="feature">
         <div class="feature-icon">📱</div>
@@ -446,9 +446,8 @@
       const container = document.createElement('div');
       container.id = 'demo-snow-container';
       
-      const isMobile = window.innerWidth < 768;
-      const count = isMobile ? 500 : 2500;
-      const shapes = ['✦', '0', '1'];
+      const count = 1000;
+      const shapes = ['0', '1'];
       
       for (let i = 0; i < count; i++) {
         const snowflake = document.createElement('div');

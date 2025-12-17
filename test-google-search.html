@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Google Search Detection</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Courier New', monospace;
+      background: #0a0a0f;
+      color: #00ff9f;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 800px;
+      width: 100%;
+      background: rgba(0, 255, 159, 0.05);
+      border: 3px solid #00ff9f;
+      padding: 2rem;
+      box-shadow: 0 0 30px rgba(0, 255, 159, 0.3);
+    }
+    
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      text-shadow: 0 0 20px rgba(0, 255, 159, 0.8);
+    }
+    
+    .info {
+      background: rgba(0, 255, 159, 0.1);
+      border-left: 4px solid #00ff9f;
+      padding: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      color: #00d4aa;
+    }
+    
+    input, select {
+      width: 100%;
+      padding: 0.75rem;
+      background: rgba(0, 0, 0, 0.3);
+      border: 2px solid #00ff9f;
+      color: #00ff9f;
+      font-family: 'Courier New', monospace;
+      font-size: 1rem;
+    }
+    
+    input:focus, select:focus {
+      outline: none;
+      box-shadow: 0 0 10px rgba(0, 255, 159, 0.5);
+    }
+    
+    button {
+      width: 100%;
+      padding: 1rem;
+      background: linear-gradient(135deg, #00ff9f 0%, #00d4aa 100%);
+      color: #0a0a0f;
+      border: none;
+      font-family: 'Courier New', monospace;
+      font-size: 1.2rem;
+      font-weight: bold;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: all 0.3s;
+    }
+    
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(0, 255, 159, 0.5);
+    }
+    
+    .presets {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .preset-btn {
+      padding: 0.75rem;
+      background: transparent;
+      border: 2px solid #00ff9f;
+      color: #00ff9f;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .preset-btn:hover {
+      background: rgba(0, 255, 159, 0.2);
+    }
+    
+    .note {
+      margin-top: 2rem;
+      padding: 1rem;
+      background: rgba(255, 100, 0, 0.1);
+      border: 2px solid #ff6400;
+      color: #ff9d4a;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔍 Test Google Search Detection</h1>
+    
+    <div class="info">
+      <strong>▸ Purpose:</strong> This tool simulates a visit from Google Search by setting a custom referrer and redirecting to the main page.
+    </div>
+    
+    <div class="form-group">
+      <label>Quick Presets:</label>
+      <div class="presets">
+        <button class="preset-btn" onclick="setPreset('cyber snowfall')">
+          Cyber Snowfall
+        </button>
+        <button class="preset-btn" onclick="setPreset('webgl particles')">
+          WebGL Particles
+        </button>
+        <button class="preset-btn" onclick="setPreset('javascript bookmarklet')">
+          JS Bookmarklet
+        </button>
+        <button class="preset-btn" onclick="setPreset('gpu animation')">
+          GPU Animation
+        </button>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="domain">Google Domain:</label>
+      <select id="domain">
+        <option value="google.com">google.com (Global)</option>
+        <option value="google.it">google.it (Italy)</option>
+        <option value="google.co.uk">google.co.uk (UK)</option>
+        <option value="google.de">google.de (Germany)</option>
+        <option value="google.fr">google.fr (France)</option>
+        <option value="google.es">google.es (Spain)</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label for="query">Search Query:</label>
+      <input 
+        type="text" 
+        id="query" 
+        placeholder="Enter search query (e.g., cyber snowfall)"
+        value="cyber snowfall"
+      >
+    </div>
+    
+    <div class="form-group">
+      <label for="target">Target Page:</label>
+      <input 
+        type="text" 
+        id="target" 
+        placeholder="URL to redirect to"
+        value="./index.html"
+      >
+    </div>
+    
+    <button onclick="simulateGoogleVisit()">
+      ▸ SIMULATE GOOGLE SEARCH VISIT
+    </button>
+    
+    <div class="note">
+      <strong>⚠️ Note:</strong> This will create a temporary page that automatically redirects to the target with a Google referrer. The referrer will be set via HTTP Referer Policy. Some browsers may not support this method.
+    </div>
+  </div>
+  
+  <script>
+    function setPreset(query) {
+      document.getElementById('query').value = query;
+    }
+    
+    function simulateGoogleVisit() {
+      const domain = document.getElementById('domain').value;
+      const query = document.getElementById('query').value || 'test';
+      const target = document.getElementById('target').value || './index.html';
+      
+      // Create referrer URL
+      const referrerUrl = `https://www.${domain}/search?q=${encodeURIComponent(query)}`;
+      
+      // Method 1: Create a temporary page with meta refresh and referrer policy
+      const html = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="0; url=${target}">
+  <meta name="referrer" content="unsafe-url">
+  <title>Redirecting...</title>
+  <style>
+    body {
+      font-family: 'Courier New', monospace;
+      background: #0a0a0f;
+      color: #00ff9f;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .message {
+      text-align: center;
+      font-size: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="message">
+    🔍 Simulating Google Search...<br>
+    <small>Redirecting...</small>
+  </div>
+  <script>
+    // Set document.referrer simulation (won't work but shows intent)
+    console.log('Simulated Referrer: ${referrerUrl}');
+    console.log('Target: ${target}');
+    console.log('Query: ${query}');
+    
+    // Alternative: Use history API
+    if (window.history && window.history.pushState) {
+      window.history.pushState({}, '', '?ref=${encodeURIComponent(referrerUrl)}');
+    }
+    
+    // Redirect after brief delay
+    setTimeout(() => {
+      window.location.href = '${target}?utm_source=google&utm_medium=organic&utm_campaign=test&q=${encodeURIComponent(query)}';
+    }, 500);
+  <\/script>
+</body>
+</html>
+      `.trim();
+      
+      // Create a blob and open it
+      const blob = new Blob([html], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      
+      // Open in new tab
+      const newWindow = window.open(url, '_blank');
+      
+      if (!newWindow) {
+        alert('⚠️ Popup blocked! Please allow popups for this page.');
+      } else {
+        // Show instructions
+        setTimeout(() => {
+          alert(`✅ Test page opened!\n\nNote: Due to browser security, the referrer might not be set correctly.\n\nFor accurate testing:\n1. Use actual Google Search\n2. Or use DevTools console:\n\nObject.defineProperty(document, 'referrer', {\n  value: '${referrerUrl}',\n  writable: false\n});\nlocation.reload();`);
+        }, 1000);
+      }
+    }
+    
+    // Alternative method using form submission
+    function simulateGoogleVisitForm() {
+      const domain = document.getElementById('domain').value;
+      const query = document.getElementById('query').value || 'test';
+      const target = document.getElementById('target').value || './index.html';
+      
+      // Create a form that submits to target
+      const form = document.createElement('form');
+      form.method = 'GET';
+      form.action = target;
+      form.style.display = 'none';
+      
+      // Add query parameter
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = 'q';
+      input.value = query;
+      form.appendChild(input);
+      
+      document.body.appendChild(form);
+      form.submit();
+    }
+  </script>
+</body>
+</html>

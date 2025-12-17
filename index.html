@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>⚡ CYBER SNOWFALL - 2500 Particles Bookmarklet</title>
+  <meta name="description" content="Extreme cyber snowfall bookmarklet! 2500 digital particles (✦ 0 1) on any website. GPU-accelerated performance.">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="⚡ CYBER SNOWFALL - 2500 Particles">
+  <meta property="og:description" content="Extreme cyber snowfall with 2500 digital particles! ✦ 0 1">
+  <meta property="og:type" content="website">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Courier New', monospace;
+      background: #0a0a0f;
+      color: #00ff9f;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      position: relative;
+      overflow-x: hidden;
+    }
+    
+    /* Cyber grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        linear-gradient(90deg, rgba(0, 255, 159, 0.03) 1px, transparent 1px),
+        linear-gradient(rgba(0, 255, 159, 0.03) 1px, transparent 1px);
+      background-size: 50px 50px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    
+    .container {
+      max-width: 900px;
+      width: 100%;
+      text-align: center;
+      position: relative;
+      z-index: 10;
+    }
+    
+    h1 {
+      font-size: 4rem;
+      font-weight: 900;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 20px rgba(0, 255, 159, 0.8), 0 0 40px rgba(0, 255, 159, 0.5);
+      line-height: 1.2;
+      letter-spacing: -2px;
+    }
+    
+    .cyber-badge {
+      display: inline-block;
+      background: rgba(0, 255, 159, 0.1);
+      border: 2px solid #00ff9f;
+      padding: 0.5rem 1.5rem;
+      margin-bottom: 2rem;
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      box-shadow: 0 0 20px rgba(0, 255, 159, 0.3);
+    }
+    
+    .subtitle {
+      font-size: 1.3rem;
+      margin-bottom: 3rem;
+      opacity: 0.9;
+      font-weight: 400;
+      color: #00d4aa;
+    }
+    
+    .bookmarklet-box {
+      background: rgba(0, 255, 159, 0.05);
+      border: 3px solid #00ff9f;
+      border-radius: 0;
+      padding: 3rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 0 30px rgba(0, 255, 159, 0.3);
+      position: relative;
+    }
+    
+    .bookmarklet-box::before,
+    .bookmarklet-box::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border: 3px solid #00ff9f;
+    }
+    
+    .bookmarklet-box::before {
+      top: -3px;
+      left: -3px;
+      border-right: none;
+      border-bottom: none;
+    }
+    
+    .bookmarklet-box::after {
+      bottom: -3px;
+      right: -3px;
+      border-left: none;
+      border-top: none;
+    }
+    
+    .drag-instruction {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+      color: #00ff9f;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-shadow: 0 0 10px rgba(0, 255, 159, 0.5);
+    }
+    
+    .bookmarklet-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #00ff9f 0%, #00d4aa 100%);
+      color: #0a0a0f;
+      font-size: 1.8rem;
+      font-weight: 900;
+      padding: 1.5rem 3rem;
+      border: none;
+      text-decoration: none;
+      box-shadow: 0 0 30px rgba(0, 255, 159, 0.5);
+      transition: all 0.3s ease;
+      cursor: move;
+      position: relative;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-family: 'Courier New', monospace;
+    }
+    
+    .bookmarklet-btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 50px rgba(0, 255, 159, 0.8);
+    }
+    
+    .bookmarklet-btn:active {
+      transform: translateY(-2px);
+    }
+    
+    .arrow-down {
+      font-size: 2rem;
+      margin-top: 1rem;
+      animation: bounce 2s infinite;
+      color: #00ff9f;
+    }
+    
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(-10px);
+      }
+      60% {
+        transform: translateY(-5px);
+      }
+    }
+    
+    .instructions {
+      background: rgba(0, 255, 159, 0.05);
+      border: 2px solid #00ff9f;
+      padding: 2rem;
+      margin-top: 2rem;
+      text-align: left;
+    }
+    
+    .instructions h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      text-align: center;
+      color: #00ff9f;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+    
+    .instructions ol {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      padding-left: 1.5rem;
+      color: #00d4aa;
+    }
+    
+    .instructions li {
+      margin-bottom: 0.8rem;
+    }
+    
+    .demo-section {
+      margin-top: 2rem;
+      padding: 2rem;
+      background: rgba(0, 255, 159, 0.05);
+      border: 2px solid #00ff9f;
+    }
+    
+    .demo-btn {
+      background: transparent;
+      border: 3px solid #00ff9f;
+      color: #00ff9f;
+      font-size: 1.2rem;
+      padding: 1rem 2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-family: 'Courier New', monospace;
+    }
+    
+    .demo-btn:hover {
+      background: #00ff9f;
+      color: #0a0a0f;
+      box-shadow: 0 0 30px rgba(0, 255, 159, 0.5);
+    }
+    
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    
+    .feature {
+      background: rgba(0, 255, 159, 0.05);
+      border: 2px solid #00ff9f;
+      padding: 1.5rem;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+    
+    .feature:hover {
+      background: rgba(0, 255, 159, 0.1);
+      box-shadow: 0 0 20px rgba(0, 255, 159, 0.3);
+    }
+    
+    .feature-icon {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .warning {
+      background: rgba(255, 100, 0, 0.1);
+      border: 2px solid #ff6400;
+      color: #ff9d4a;
+      padding: 1rem;
+      margin: 2rem 0;
+      font-size: 0.9rem;
+    }
+    
+    footer {
+      margin-top: 3rem;
+      opacity: 0.7;
+      font-size: 0.9rem;
+      color: #00d4aa;
+    }
+    
+    footer a {
+      color: #00ff9f;
+      text-decoration: none;
+      font-weight: 700;
+    }
+    
+    footer a:hover {
+      text-decoration: underline;
+      text-shadow: 0 0 10px rgba(0, 255, 159, 0.8);
+    }
+    
+    /* Demo snow effect */
+    #demo-snow-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 999999;
+      overflow: hidden;
+    }
+    
+    .demo-snowflake {
+      position: absolute;
+      top: -10%;
+      font-size: 1.5rem;
+      color: #00ff9f;
+      opacity: 0.8;
+      user-select: none;
+      animation: demo-snowfall linear infinite;
+      text-shadow: 0 0 5px rgba(0, 255, 159, 0.8);
+      will-change: transform, opacity;
+      transform: translateZ(0);
+    }
+    
+    @keyframes demo-snowfall {
+      0% {
+        transform: translateY(0) translateX(0) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.8;
+      }
+      90% {
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(110vh) translateX(100px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.5rem;
+      }
+      .subtitle {
+        font-size: 1.1rem;
+      }
+      .bookmarklet-btn {
+        font-size: 1.2rem;
+        padding: 1.2rem 2rem;
+      }
+      .bookmarklet-box {
+        padding: 2rem 1rem;
+      }
+      .demo-snowflake {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="container">
+    <div class="cyber-badge">⚡ EXTREME MODE ⚡</div>
+    
+    <h1>CYBER SNOWFALL</h1>
+    <p class="subtitle">2500 Digital Particles | GPU Accelerated | ✦ 0 1</p>
+    
+    <div class="bookmarklet-box">
+      <p class="drag-instruction">
+        👇 DRAG THIS TO YOUR BOOKMARKS 👇
+      </p>
+      
+      <a href="javascript:(function(){const isMobile=window.innerWidth<768;const count=isMobile?500:2500;if(document.getElementById('titan-cyber-snow')){document.getElementById('titan-cyber-snow').remove();document.getElementById('titan-cyber-styles').remove();return}const s=document.createElement('style');s.id='titan-cyber-styles';s.textContent='#titan-cyber-snow{position:fixed;top:0;left:0;width:100%25;height:100%25;pointer-events:none;z-index:999999;overflow:hidden}.titan-cyber-flake{position:absolute;top:-10%25;font-size:1.5rem;color:%2300ff9f;opacity:.8;user-select:none;animation:titan-cyber-fall linear infinite;text-shadow:0 0 5px rgba(0,255,159,.8);will-change:transform,opacity;transform:translateZ(0)}@keyframes titan-cyber-fall{0%25{transform:translateY(0) translateX(0) rotate(0deg);opacity:0}10%25{opacity:.8}90%25{opacity:.8}100%25{transform:translateY(110vh) translateX(100px) rotate(360deg);opacity:0}}@media (max-width:768px){.titan-cyber-flake{font-size:1.2rem}}';document.head.appendChild(s);const c=document.createElement('div');c.id='titan-cyber-snow';const shapes=['✦','0','1'];for(let i=0;i<count;i++){const f=document.createElement('div');f.className='titan-cyber-flake';f.textContent=shapes[Math.floor(Math.random()*shapes.length)];f.style.left=Math.random()*100+'%25';f.style.animationDelay=Math.random()*10+'s';f.style.animationDuration=(6+Math.random()*6)+'s';c.appendChild(f)}document.body.appendChild(c);const n=document.createElement('div');n.textContent=`⚡ CYBER SNOW ACTIVATED! ${count} particles | Click again to stop`;n.style.cssText='position:fixed;top:20px;right:20px;background:rgba(0,0,0,.9);color:%2300ff9f;padding:15px 20px;border:2px solid %2300ff9f;font-family:monospace;font-size:14px;z-index:9999999;box-shadow:0 0 20px rgba(0,255,159,.5)';document.body.appendChild(n);setTimeout(()=>{n.style.transition='opacity 0.3s';n.style.opacity='0';setTimeout(()=>n.remove(),300)},4000)})();" 
+         class="bookmarklet-btn"
+         onclick="return false;">
+        ⚡ CYBER SNOW
+      </a>
+      
+      <div class="arrow-down">⬇️</div>
+    </div>
+    
+    <div class="warning">
+      ⚠️ <strong>EXTREME MODE:</strong> 2500 particles on desktop (500 on mobile). Requires decent GPU. May lag on older devices.
+    </div>
+    
+    <div class="instructions">
+      <h2>// INSTALLATION</h2>
+      <ol>
+        <li><strong>DRAG</strong> the "⚡ CYBER SNOW" button to your bookmarks bar</li>
+        <li><strong>NAVIGATE</strong> to any website (Facebook, LinkedIn, Twitter, etc.)</li>
+        <li><strong>CLICK</strong> the bookmark</li>
+        <li><strong>BOOM!</strong> 2500 cyber particles! ✦ 0 1</li>
+        <li><strong>CLICK AGAIN</strong> to disable</li>
+      </ol>
+    </div>
+    
+    <div class="demo-section">
+      <h2 style="color: #00ff9f; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 2px;">// LIVE DEMO</h2>
+      <p style="margin-bottom: 1rem; color: #00d4aa;">Click to see the cyber snowfall on this page!</p>
+      <button class="demo-btn" onclick="toggleDemoSnow()">
+        ⚡ ACTIVATE/DEACTIVATE DEMO
+      </button>
+    </div>
+    
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">⚡</div>
+        <strong>2500 PARTICLES</strong><br>
+        Extreme density (500 mobile)
+      </div>
+      <div class="feature">
+        <div class="feature-icon">✦</div>
+        <strong>CYBER SYMBOLS</strong><br>
+        ✦ 0 1 digital aesthetic
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🚀</div>
+        <strong>GPU ACCELERATED</strong><br>
+        Optimized performance
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📱</div>
+        <strong>RESPONSIVE</strong><br>
+        Auto-adjust on mobile
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🌐</div>
+        <strong>UNIVERSAL</strong><br>
+        99% of websites
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🔄</div>
+        <strong>TOGGLE ON/OFF</strong><br>
+        Click to enable/disable
+      </div>
+    </div>
+  </div>
+  
+  <footer>
+    Made with ⚡ by <a href="https://digitalengineered.ai" target="_blank">DIGITALENGINEERED.AI</a><br>
+    TITAN PROTOCOL v4.5 | CYBER EDITION
+  </footer>
+  
+  <script>
+    let demoSnowActive = false;
+    
+    function toggleDemoSnow() {
+      const existingSnow = document.getElementById('demo-snow-container');
+      
+      if (existingSnow) {
+        existingSnow.remove();
+        demoSnowActive = false;
+        return;
+      }
+      
+      const container = document.createElement('div');
+      container.id = 'demo-snow-container';
+      
+      const isMobile = window.innerWidth < 768;
+      const count = isMobile ? 500 : 2500;
+      const shapes = ['✦', '0', '1'];
+      
+      for (let i = 0; i < count; i++) {
+        const snowflake = document.createElement('div');
+        snowflake.className = 'demo-snowflake';
+        snowflake.textContent = shapes[Math.floor(Math.random() * shapes.length)];
+        snowflake.style.left = Math.random() * 100 + '%';
+        snowflake.style.animationDelay = Math.random() * 10 + 's';
+        snowflake.style.animationDuration = (6 + Math.random() * 6) + 's';
+        container.appendChild(snowflake);
+      }
+      
+      document.body.appendChild(container);
+      demoSnowActive = true;
+    }
+    
+    // Prevent default link behavior for bookmarklet
+    document.querySelector('.bookmarklet-btn').addEventListener('click', function(e) {
+      e.preventDefault();
+      alert('💡 DRAG this button to your bookmarks!\n\nDon\'t click it here, drag it to your browser\'s bookmarks bar.');
+    });
+  </script>
+  
+</body>
+</html>

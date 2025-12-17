@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>⚡ CYBER SNOWFALL - WebGL Edition | 1000 Particles 0|1</title>
-  <meta name="description" content="WebGL cyber snowfall bookmarklet! 1000 digital particles (0 | 1) on any website. GPU-accelerated performance.">
+  <title>CYBER SNOWFALL - WebGL Edition | 1000 Particelle 0|1</title>
+  <meta name="description" content="Bookmarklet cyber snowfall WebGL! 1000 particelle digitali (0 | 1) su qualsiasi sito web. Performance GPU-accelerata.">
   
   <!-- Open Graph -->
-  <meta property="og:title" content="⚡ CYBER SNOWFALL - WebGL 1000 Particles">
-  <meta property="og:description" content="WebGL cyber snowfall with 1000 particles! 0 | 1">
+  <meta property="og:title" content="CYBER SNOWFALL - WebGL 1000 Particelle">
+  <meta property="og:description" content="Cyber snowfall WebGL con 1000 particelle! 0 | 1">
   <meta property="og:type" content="website">
   
   <!-- Favicon -->
@@ -235,9 +235,15 @@
     
     .features {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 1rem;
       margin-top: 2rem;
+    }
+    
+    @media (max-width: 768px) {
+      .features {
+        grid-template-columns: 1fr;
+      }
     }
     
     .feature {
@@ -350,88 +356,163 @@
 <body>
   
   <div class="container">
-    <div class="cyber-badge">⚡ WEBGL EDITION ⚡</div>
+    <button id="langToggle" style="position: absolute; top: 20px; right: 20px; background: rgba(0,255,159,0.2); border: 2px solid #00ff9f; color: #00ff9f; padding: 10px 20px; cursor: pointer; font-family: 'Courier New', monospace; font-weight: bold; transition: all 0.3s;" onmouseover="this.style.background='rgba(0,255,159,0.3)'" onmouseout="this.style.background='rgba(0,255,159,0.2)'">
+      🇮🇹 IT
+    </button>
+    
+    <div class="cyber-badge">▸ WEBGL EDITION ◂</div>
     
     <h1>CYBER SNOWFALL</h1>
-    <p class="subtitle">1000 Digital Particles | WebGL GPU | 0 | 1</p>
+    <p class="subtitle" data-lang="subtitle">1000 Particelle Digitali | WebGL GPU | 0 | 1</p>
     
     <div class="bookmarklet-box">
-      <p class="drag-instruction">
-        👇 DRAG THIS TO YOUR BOOKMARKS 👇
+      <p class="drag-instruction" data-lang="drag">
+        ▼ TRASCINA NEI PREFERITI ▼
       </p>
       
-      <a href="javascript:void(fetch('https://snowcyber.digitalengineered.ai/snowfall-cyber-webgl.js').then(r=>r.text()).then(eval))" 
+      <a href="javascript:(function(){if(document.getElementById('titan-cyber-webgl')){document.getElementById('titan-cyber-webgl').remove();return}const canvas=document.createElement('canvas');canvas.id='titan-cyber-webgl';canvas.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:999999';document.body.appendChild(canvas);const gl=canvas.getContext('webgl',{alpha:true});if(!gl){alert('WebGL not supported');canvas.remove();return}function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;gl.viewport(0,0,canvas.width,canvas.height)}resize();window.addEventListener('resize',resize);const particles=[];for(let i=0;i<1000;i++){particles.push({x:Math.random()*canvas.width,y:-Math.random()*canvas.height,speed:1+Math.random()*2,size:12+Math.random()*8,char:Math.random()>0.5?'0':'1',opacity:0.6+Math.random()*0.4,sway:Math.random()*Math.PI*2})}const tc=document.createElement('canvas');const ctx=tc.getContext('2d');tc.width=tc.height=64;function renderText(c){ctx.clearRect(0,0,64,64);ctx.fillStyle='#00ff9f';ctx.font='bold 48px monospace';ctx.textAlign='center';ctx.textBaseline='middle';ctx.shadowColor='#00ff9f';ctx.shadowBlur=10;ctx.fillText(c,32,32)}const vs=`attribute vec2 a_position;attribute vec2 a_texCoord;uniform vec2 u_resolution;varying vec2 v_texCoord;void main(){vec2 pos=(a_position/u_resolution)*2.0-1.0;gl_Position=vec4(pos*vec2(1,-1),0,1);v_texCoord=a_texCoord;}`;const fs=`precision mediump float;uniform sampler2D u_texture;uniform float u_opacity;varying vec2 v_texCoord;void main(){vec4 c=texture2D(u_texture,v_texCoord);gl_FragColor=vec4(c.rgb,c.a*u_opacity);}`;function cs(src,type){const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);return s}const vsh=cs(vs,gl.VERTEX_SHADER);const fsh=cs(fs,gl.FRAGMENT_SHADER);const prog=gl.createProgram();gl.attachShader(prog,vsh);gl.attachShader(prog,fsh);gl.linkProgram(prog);gl.useProgram(prog);const posLoc=gl.getAttribLocation(prog,'a_position');const texLoc=gl.getAttribLocation(prog,'a_texCoord');const resLoc=gl.getUniformLocation(prog,'u_resolution');const opLoc=gl.getUniformLocation(prog,'u_opacity');const posBuf=gl.createBuffer();const texBuf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,texBuf);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([0,0,1,0,0,1,1,1]),gl.STATIC_DRAW);const t0=gl.createTexture();const t1=gl.createTexture();renderText('0');gl.bindTexture(gl.TEXTURE_2D,t0);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,tc);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);renderText('1');gl.bindTexture(gl.TEXTURE_2D,t1);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,tc);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);function animate(){if(!document.getElementById('titan-cyber-webgl'))return;gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT);gl.enable(gl.BLEND);gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);gl.uniform2f(resLoc,canvas.width,canvas.height);particles.forEach(p=>{p.y+=p.speed;p.sway+=0.02;p.x+=Math.sin(p.sway)*0.5;if(p.y>canvas.height+50){p.y=-50;p.x=Math.random()*canvas.width}const hw=p.size/2;const pos=new Float32Array([p.x-hw,p.y-hw,p.x+hw,p.y-hw,p.x-hw,p.y+hw,p.x+hw,p.y+hw]);gl.bindBuffer(gl.ARRAY_BUFFER,posBuf);gl.bufferData(gl.ARRAY_BUFFER,pos,gl.STATIC_DRAW);gl.enableVertexAttribArray(posLoc);gl.vertexAttribPointer(posLoc,2,gl.FLOAT,false,0,0);gl.bindBuffer(gl.ARRAY_BUFFER,texBuf);gl.enableVertexAttribArray(texLoc);gl.vertexAttribPointer(texLoc,2,gl.FLOAT,false,0,0);gl.bindTexture(gl.TEXTURE_2D,p.char==='0'?t0:t1);gl.uniform1f(opLoc,p.opacity);gl.drawArrays(gl.TRIANGLE_STRIP,0,4)});requestAnimationFrame(animate)}animate();const n=document.createElement('div');n.textContent='▸ CYBER SNOW WEBGL! 1000 particles (0|1)';n.style.cssText='position:fixed;top:20px;right:20px;background:rgba(0,0,0,.9);color:#00ff9f;padding:15px 20px;border:2px solid #00ff9f;font-family:monospace;font-size:14px;z-index:9999999;box-shadow:0 0 20px rgba(0,255,159,.5)';document.body.appendChild(n);setTimeout(()=>{n.style.transition='opacity 0.3s';n.style.opacity='0';setTimeout(()=>n.remove(),300)},4000)})();" 
          class="bookmarklet-btn"
          onclick="return false;">
-        ⚡ CYBER SNOW
+        ▸ CYBER SNOW
       </a>
-      
-      <div class="arrow-down">⬇️</div>
     </div>
     
-    <div class="warning">
-      ⚡ <strong>WEBGL POWERED:</strong> 1000 particles using native WebGL. Optimized GPU rendering. Smooth 60 FPS on modern browsers.
+    <div class="warning" data-lang="warning">
+      ▸ <strong>WEBGL NATIVO:</strong> 1000 particelle con WebGL nativo. Rendering GPU ottimizzato. 60 FPS fluidi su browser moderni.
+    </div>
+    
+    <div style="background: rgba(0,255,159,0.15); border: 3px solid #00ff9f; padding: 2rem; margin: 2rem 0; text-align: center; box-shadow: 0 0 40px rgba(0,255,159,0.4);">
+      <p style="font-size: 1.8rem; font-weight: 900; color: #00ff9f; margin: 0; text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 0 20px rgba(0,255,159,0.8);" data-lang="engineering">
+        Questa è ingegneria. Non magia.<br>Puro codice, GPU nativa, zero dipendenze.
+      </p>
     </div>
     
     <div class="instructions">
-      <h2>// INSTALLATION</h2>
+      <h2 data-lang="instrTitle">// INSTALLAZIONE</h2>
       <ol>
-        <li><strong>DRAG</strong> the "⚡ CYBER SNOW" button to your bookmarks bar</li>
-        <li><strong>NAVIGATE</strong> to any website (Facebook, LinkedIn, Twitter, etc.)</li>
-        <li><strong>CLICK</strong> the bookmark</li>
-        <li><strong>BOOM!</strong> 1000 cyber particles! 0 | 1</li>
-        <li><strong>CLICK AGAIN</strong> to disable</li>
+        <li data-lang="instr1"><strong>TRASCINA</strong> il bottone "▸ CYBER SNOW" nella barra dei preferiti</li>
+        <li data-lang="instr2"><strong>VAI</strong> su qualsiasi sito web (Facebook, LinkedIn, Twitter, ecc.)</li>
+        <li data-lang="instr3"><strong>CLICCA</strong> il bookmark nella barra</li>
+        <li data-lang="instr4"><strong>BOOM!</strong> 1000 particelle cyber! 0 | 1</li>
+        <li data-lang="instr5"><strong>CLICCA DI NUOVO</strong> per disattivare</li>
       </ol>
     </div>
     
     <div class="demo-section">
-      <h2 style="color: #00ff9f; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 2px;">// LIVE DEMO</h2>
-      <p style="margin-bottom: 1rem; color: #00d4aa;">Click to see the cyber snowfall on this page!</p>
-      <button class="demo-btn" onclick="toggleDemoSnow()">
-        ⚡ ACTIVATE/DEACTIVATE DEMO
+      <h2 style="color: #00ff9f; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 2px;" data-lang="demoTitle">// DEMO LIVE</h2>
+      <p style="margin-bottom: 1rem; color: #00d4aa;" data-lang="demoDesc">Clicca per vedere la cyber snowfall su questa pagina!</p>
+      <button class="demo-btn" onclick="toggleDemoSnow()" data-lang="demoBtn">
+        ▸ ATTIVA/DISATTIVA DEMO
       </button>
     </div>
     
     <div class="features">
       <div class="feature">
-        <div class="feature-icon">⚡</div>
-        <strong>1000 PARTICLES</strong><br>
-        WebGL optimized
+        <div class="feature-icon">◆</div>
+        <div><strong>1000 PARTICELLE</strong><br>WebGL ottimizzato</div>
       </div>
       <div class="feature">
-        <div class="feature-icon">0️⃣</div>
-        <strong>BINARY SYMBOLS</strong><br>
-        0 | 1 digital aesthetic
+        <div class="feature-icon">⊞</div>
+        <div><strong>SIMBOLI BINARI</strong><br>0 | 1 estetica digitale</div>
       </div>
       <div class="feature">
-        <div class="feature-icon">🚀</div>
-        <strong>NATIVE WEBGL</strong><br>
-        GPU rendering
+        <div class="feature-icon">▸</div>
+        <div><strong>WEBGL NATIVO</strong><br>Rendering GPU</div>
       </div>
       <div class="feature">
-        <div class="feature-icon">📱</div>
-        <strong>RESPONSIVE</strong><br>
-        Auto-adjust on mobile
+        <div class="feature-icon">⎔</div>
+        <div><strong>RESPONSIVE</strong><br>Ottimizzato mobile</div>
       </div>
       <div class="feature">
-        <div class="feature-icon">🌐</div>
-        <strong>UNIVERSAL</strong><br>
-        99% of websites
+        <div class="feature-icon">◉</div>
+        <div><strong>UNIVERSALE</strong><br>99% dei siti web</div>
       </div>
       <div class="feature">
-        <div class="feature-icon">🔄</div>
-        <strong>TOGGLE ON/OFF</strong><br>
-        Click to enable/disable
+        <div class="feature-icon">⟲</div>
+        <div><strong>ON/OFF</strong><br>Clicca per attivare</div>
       </div>
     </div>
   </div>
   
   <footer>
-    Made with ⚡ by <a href="https://digitalengineered.ai" target="_blank">DIGITALENGINEERED.AI</a><br>
+    Creato con ▸ da <a href="https://digitalengineered.ai" target="_blank">DIGITALENGINEERED.AI</a><br>
     TITAN PROTOCOL v4.5 | CYBER EDITION
   </footer>
   
   <script>
+    let currentLang = 'it';
+    const translations = {
+      it: {
+        subtitle: '1000 Particelle Digitali | WebGL GPU | 0 | 1',
+        drag: '▼ TRASCINA NEI PREFERITI ▼',
+        warning: '▸ <strong>WEBGL NATIVO:</strong> 1000 particelle con WebGL nativo. Rendering GPU ottimizzato. 60 FPS fluidi su browser moderni.',
+        engineering: 'Questa è ingegneria. Non magia.<br>Puro codice, GPU nativa, zero dipendenze.',
+        instrTitle: '// INSTALLAZIONE',
+        instr1: '<strong>TRASCINA</strong> il bottone "▸ CYBER SNOW" nella barra dei preferiti',
+        instr2: '<strong>VAI</strong> su qualsiasi sito web (Facebook, LinkedIn, Twitter, ecc.)',
+        instr3: '<strong>CLICCA</strong> il bookmark nella barra',
+        instr4: '<strong>BOOM!</strong> 1000 particelle cyber! 0 | 1',
+        instr5: '<strong>CLICCA DI NUOVO</strong> per disattivare',
+        demoTitle: '// DEMO LIVE',
+        demoDesc: 'Clicca per vedere la cyber snowfall su questa pagina!',
+        demoBtn: '▸ ATTIVA/DISATTIVA DEMO',
+        feat1: '<strong>1000 PARTICELLE</strong><br>WebGL ottimizzato',
+        feat2: '<strong>SIMBOLI BINARI</strong><br>0 | 1 estetica digitale',
+        feat3: '<strong>WEBGL NATIVO</strong><br>Rendering GPU',
+        feat4: '<strong>RESPONSIVE</strong><br>Ottimizzato mobile',
+        feat5: '<strong>UNIVERSALE</strong><br>99% dei siti web',
+        feat6: '<strong>ON/OFF</strong><br>Clicca per attivare',
+        footer: 'Creato con ▸ da'
+      },
+      en: {
+        subtitle: '1000 Digital Particles | WebGL GPU | 0 | 1',
+        drag: '▼ DRAG TO BOOKMARKS ▼',
+        warning: '▸ <strong>NATIVE WEBGL:</strong> 1000 particles with native WebGL. Optimized GPU rendering. Smooth 60 FPS on modern browsers.',
+        engineering: 'This is engineering. Not magic.<br>Pure code, native GPU, zero dependencies.',
+        instrTitle: '// INSTALLATION',
+        instr1: '<strong>DRAG</strong> the "▸ CYBER SNOW" button to your bookmarks bar',
+        instr2: '<strong>GO</strong> to any website (Facebook, LinkedIn, Twitter, etc.)',
+        instr3: '<strong>CLICK</strong> the bookmark in the bar',
+        instr4: '<strong>BOOM!</strong> 1000 cyber particles! 0 | 1',
+        instr5: '<strong>CLICK AGAIN</strong> to disable',
+        demoTitle: '// LIVE DEMO',
+        demoDesc: 'Click to see the cyber snowfall on this page!',
+        demoBtn: '▸ ACTIVATE/DEACTIVATE DEMO',
+        feat1: '<strong>1000 PARTICLES</strong><br>WebGL optimized',
+        feat2: '<strong>BINARY SYMBOLS</strong><br>0 | 1 digital aesthetic',
+        feat3: '<strong>NATIVE WEBGL</strong><br>GPU rendering',
+        feat4: '<strong>RESPONSIVE</strong><br>Mobile optimized',
+        feat5: '<strong>UNIVERSAL</strong><br>99% of websites',
+        feat6: '<strong>ON/OFF</strong><br>Click to activate',
+        footer: 'Made with ▸ by'
+      }
+    };
+    
+    document.getElementById('langToggle').addEventListener('click', function() {
+      currentLang = currentLang === 'it' ? 'en' : 'it';
+      this.textContent = currentLang === 'it' ? '🇮🇹 IT' : '🇬🇧 EN';
+      
+      document.querySelectorAll('[data-lang]').forEach(el => {
+        const key = el.getAttribute('data-lang');
+        if (translations[currentLang][key]) {
+          el.innerHTML = translations[currentLang][key];
+        }
+      });
+      
+      // Update features
+      const features = document.querySelectorAll('.feature');
+      features.forEach((feat, i) => {
+        const content = feat.querySelector('strong')?.parentElement;
+        if (content) content.innerHTML = translations[currentLang]['feat' + (i+1)];
+      });
+      
+      // Update footer
+      const footer = document.querySelector('footer');
+      if (footer) {
+        footer.innerHTML = translations[currentLang].footer + ' <a href="https://digitalengineered.ai" target="_blank">DIGITALENGINEERED.AI</a><br>TITAN PROTOCOL v4.5 | CYBER EDITION';
+      }
+    });
+    
     let demoSnowActive = false;
     
     function toggleDemoSnow() {
@@ -466,7 +547,7 @@
     // Prevent default link behavior for bookmarklet
     document.querySelector('.bookmarklet-btn').addEventListener('click', function(e) {
       e.preventDefault();
-      alert('💡 DRAG this button to your bookmarks!\n\nDon\'t click it here, drag it to your browser\'s bookmarks bar.');
+      alert('▸ TRASCINA questo bottone nei preferiti!\n\nNon cliccarlo qui, trascinalo nella barra dei preferiti del browser.');
     });
   </script>
   

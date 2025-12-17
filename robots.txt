@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://snow.digitalengineered.ai/sitemap.xml
+Sitemap: https://snowcyber.digitalengineered.ai/sitemap.xml
 

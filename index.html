@@ -437,9 +437,227 @@
   <footer>
     Creato con ▸ da <a href="https://digitalengineered.ai" target="_blank">DIGITALENGINEERED.AI</a><br>
     TITAN PROTOCOL v4.5 | CYBER EDITION
+    <div id="google-stats-indicator" style="margin-top: 1rem; font-size: 0.85rem; opacity: 0.6;"></div>
   </footer>
   
   <script>
+    // ========================================
+    // GOOGLE SEARCH RECOGNITION
+    // ========================================
+    (function() {
+      // Detect if user comes from Google Search
+      const referrer = document.referrer || '';
+      const isFromGoogle = referrer.includes('google.com/search') || 
+                          referrer.includes('google.it/search') ||
+                          referrer.includes('google.') && referrer.includes('/search');
+      
+      if (isFromGoogle) {
+        // Extract search query if available
+        let searchQuery = '';
+        try {
+          const url = new URL(referrer);
+          searchQuery = url.searchParams.get('q') || '';
+        } catch (e) {
+          console.log('Could not parse referrer URL');
+        }
+        
+        // Store analytics data
+        const analyticsData = {
+          timestamp: new Date().toISOString(),
+          referrer: referrer,
+          searchQuery: searchQuery,
+          userAgent: navigator.userAgent,
+          language: navigator.language
+        };
+        
+        // Save to localStorage for analytics
+        try {
+          const previousVisits = JSON.parse(localStorage.getItem('googleSearchVisits') || '[]');
+          previousVisits.push(analyticsData);
+          // Keep only last 10 visits
+          if (previousVisits.length > 10) {
+            previousVisits.shift();
+          }
+          localStorage.setItem('googleSearchVisits', JSON.stringify(previousVisits));
+        } catch (e) {
+          console.log('localStorage not available');
+        }
+        
+        // Show welcome banner for Google visitors
+        const googleBanner = document.createElement('div');
+        googleBanner.style.cssText = `
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          background: linear-gradient(135deg, rgba(0, 255, 159, 0.95) 0%, rgba(0, 212, 170, 0.95) 100%);
+          color: #0a0a0f;
+          padding: 15px 20px;
+          text-align: center;
+          font-family: 'Courier New', monospace;
+          font-weight: bold;
+          font-size: 16px;
+          z-index: 999999;
+          box-shadow: 0 4px 20px rgba(0, 255, 159, 0.5);
+          animation: slideDown 0.5s ease-out;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 15px;
+        `;
+        
+        const bannerText = searchQuery 
+          ? `🎯 Benvenuto da Google! Hai cercato: "${searchQuery}" - Sei nel posto giusto! ⚡`
+          : `🎯 Benvenuto da Google Search! Preparati per 1000 particelle cyber! ⚡`;
+        
+        googleBanner.innerHTML = `
+          <span style="font-size: 24px;">🔍</span>
+          <span>${bannerText}</span>
+          <button onclick="this.parentElement.remove()" style="
+            background: rgba(10, 10, 15, 0.8);
+            color: #00ff9f;
+            border: 2px solid #0a0a0f;
+            padding: 5px 15px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            margin-left: 10px;
+            transition: all 0.3s;
+          " onmouseover="this.style.background='#0a0a0f'" onmouseout="this.style.background='rgba(10, 10, 15, 0.8)'">
+            ✕
+          </button>
+        `;
+        
+        // Add animation
+        const style = document.createElement('style');
+        style.textContent = `
+          @keyframes slideDown {
+            from {
+              transform: translateY(-100%);
+              opacity: 0;
+            }
+            to {
+              transform: translateY(0);
+              opacity: 1;
+            }
+          }
+        `;
+        document.head.appendChild(style);
+        
+        document.body.appendChild(googleBanner);
+        
+        // Auto-remove banner after 8 seconds
+        setTimeout(() => {
+          googleBanner.style.transition = 'opacity 0.5s, transform 0.5s';
+          googleBanner.style.opacity = '0';
+          googleBanner.style.transform = 'translateY(-100%)';
+          setTimeout(() => googleBanner.remove(), 500);
+        }, 8000);
+        
+        // Log to console for debugging
+        console.log('🔍 Google Search Detection:', {
+          isFromGoogle: true,
+          searchQuery: searchQuery || 'N/A',
+          referrer: referrer,
+          timestamp: new Date().toISOString()
+        });
+      }
+      
+      // Add console command for developers to view Google Search analytics
+      window.viewGoogleSearchStats = function() {
+        try {
+          const visits = JSON.parse(localStorage.getItem('googleSearchVisits') || '[]');
+          
+          if (visits.length === 0) {
+            console.log('📊 No Google Search visits recorded yet.');
+            return;
+          }
+          
+          console.log('📊 GOOGLE SEARCH ANALYTICS');
+          console.log('═══════════════════════════════════════');
+          console.log(`Total visits from Google: ${visits.length}`);
+          console.log('');
+          
+          // Show all visits
+          visits.forEach((visit, index) => {
+            console.log(`Visit #${index + 1}:`);
+            console.log(`  🕒 Time: ${new Date(visit.timestamp).toLocaleString()}`);
+            console.log(`  🔍 Search Query: ${visit.searchQuery || 'N/A'}`);
+            console.log(`  🌐 Referrer: ${visit.referrer}`);
+            console.log(`  💻 Browser: ${visit.userAgent.split(' ').slice(0, 3).join(' ')}...`);
+            console.log(`  🌍 Language: ${visit.language}`);
+            console.log('');
+          });
+          
+          // Show top search queries
+          const queries = visits
+            .map(v => v.searchQuery)
+            .filter(q => q)
+            .reduce((acc, q) => {
+              acc[q] = (acc[q] || 0) + 1;
+              return acc;
+            }, {});
+          
+          if (Object.keys(queries).length > 0) {
+            console.log('🔝 Top Search Queries:');
+            Object.entries(queries)
+              .sort((a, b) => b[1] - a[1])
+              .forEach(([query, count]) => {
+                console.log(`  "${query}": ${count} time(s)`);
+              });
+          }
+          
+          console.log('═══════════════════════════════════════');
+          console.log('💡 Tip: Use clearGoogleSearchStats() to clear data');
+          
+        } catch (e) {
+          console.error('Error reading analytics:', e);
+        }
+      };
+      
+      // Add console command to clear analytics
+      window.clearGoogleSearchStats = function() {
+        try {
+          localStorage.removeItem('googleSearchVisits');
+          console.log('✅ Google Search analytics cleared successfully!');
+        } catch (e) {
+          console.error('Error clearing analytics:', e);
+        }
+      };
+      
+      // Show welcome message with commands
+      console.log('%c🎯 CYBER SNOWFALL - Google Search Recognition Active', 
+        'color: #00ff9f; font-size: 16px; font-weight: bold; font-family: monospace;');
+      console.log('%cDeveloper Commands:', 
+        'color: #00d4aa; font-size: 14px; font-weight: bold; font-family: monospace;');
+      console.log('%c• viewGoogleSearchStats() - View analytics', 
+        'color: #00ff9f; font-family: monospace;');
+      console.log('%c• clearGoogleSearchStats() - Clear analytics', 
+        'color: #00ff9f; font-family: monospace;');
+      
+      // Update footer indicator with Google Search stats
+      try {
+        const visits = JSON.parse(localStorage.getItem('googleSearchVisits') || '[]');
+        if (visits.length > 0) {
+          const indicator = document.getElementById('google-stats-indicator');
+          if (indicator) {
+            const lastVisit = visits[visits.length - 1];
+            const lastQuery = lastVisit.searchQuery || 'query unavailable';
+            indicator.innerHTML = `
+              🔍 <strong>${visits.length}</strong> visit${visits.length > 1 ? 's' : ''} from Google Search
+              ${visits.length > 0 ? `<br><span style="font-size: 0.75rem;">Last: "${lastQuery}"</span>` : ''}
+              <br><a href="javascript:viewGoogleSearchStats()" style="color: #00ff9f; text-decoration: underline; font-size: 0.75rem;">View Details</a>
+            `;
+          }
+        }
+      } catch (e) {
+        // Silently fail if localStorage not available
+      }
+    })();
+    
+    // ========================================
+    // LANGUAGE TOGGLE & TRANSLATIONS
+    // ========================================
     let currentLang = 'it';
     const translations = {
       it: {
